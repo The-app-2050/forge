@@ -1,35 +1,47 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
-import ProtectedRoute from './components/ProtectedRoute'
-import Login from './pages/Login'
-import Register from './pages/Register'
-import Onboarding from './pages/Onboarding'
-import Boot from './pages/Boot'
-import Brief from './pages/Brief'
-import Recall from './pages/Recall'
-import ActivityLog from './pages/ActivityLog'
-import ForgotPassword from './pages/ForgotPassword'
-import ResetPassword from './pages/ResetPassword'
-import Security from './pages/Security'
-import Settings from './pages/Settings'
-import PageNotFound from './lib/PageNotFound'
-
-export default function App() {
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/forgot-password" element={<ForgotPassword />} />
-        <Route path="/reset-password" element={<ResetPassword />} />
-        <Route path="/" element={<ProtectedRoute><Boot /></ProtectedRoute>} />
-        <Route path="/onboarding" element={<ProtectedRoute><Onboarding /></ProtectedRoute>} />
-        <Route path="/brief" element={<ProtectedRoute><Brief /></ProtectedRoute>} />
-        <Route path="/recall" element={<ProtectedRoute><Recall /></ProtectedRoute>} />
-        <Route path="/activity-log" element={<ProtectedRoute><ActivityLog /></ProtectedRoute>} />
-        <Route path="/security" element={<ProtectedRoute><Security /></ProtectedRoute>} />
-        <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
-        <Route path="*" element={<PageNotFound />} />
-      </Routes>
-    </BrowserRouter>
-  )
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@layer base {
+  :root {
+    --background: 0 0% 2%;
+    --foreground: 0 0% 98%;
+    --card: 0 0% 4%;
+    --card-foreground: 0 0% 98%;
+    --popover: 0 0% 4%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 263 70% 58%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 0 0% 8%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 0 0% 10%;
+    --muted-foreground: 0 0% 55%;
+    --accent: 263 70% 58%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 263 30% 20%;
+    --input: 0 0% 8%;
+    --ring: 263 70% 58%;
+    --radius: 1rem;
+  }
 }
+@layer base {
+  * { @apply border-border outline-ring/50; }
+  body {
+    @apply bg-[#050505] text-white;
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
+  }
+}
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 8px rgba(139, 92, 246, 0.6); }
+  50% { box-shadow: 0 0 20px rgba(139, 92, 246, 1); }
+}
+@keyframes dot-pulse {
+  0%, 100% { box-shadow: 0 0 4px rgba(16, 185, 129, 0.8); }
+  50% { box-shadow: 0 0 12px rgba(16, 185, 129, 1); }
+}
+.glow-violet { animation: pulse-glow 2s ease-in-out infinite; }
+.dot-pulse { animation: dot-pulse 2s ease-in-out infinite; }
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: #050505; }
+::-webkit-scrollbar-thumb { background: rgba(139,92,246,0.3); border-radius: 2px; }
