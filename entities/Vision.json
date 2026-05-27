@@ -1,0 +1,33 @@
+{
+  "name": "Vision",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Original user prompt / vision text"
+    },
+    "manifestation": {
+      "type": "string",
+      "default": "PENDING",
+      "description": "AI-generated Crystal Core response"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "vision",
+        "note",
+        "insight"
+      ],
+      "default": "vision",
+      "description": "Memory type"
+    },
+    "forgedAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When this vision was forged"
+    }
+  },
+  "required": [
+    "name"
+  ]
+}
