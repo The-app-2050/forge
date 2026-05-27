@@ -1,0 +1,37 @@
+{
+  "name": "UserProfile",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "User designation or alias"
+    },
+    "location": {
+      "type": "string",
+      "description": "Primary sector / city region"
+    },
+    "preferredStyle": {
+      "type": "string",
+      "enum": [
+        "cinematic",
+        "stealth",
+        "developer"
+      ],
+      "default": "cinematic",
+      "description": "Interface resonance style"
+    },
+    "isPremium": {
+      "type": "boolean",
+      "default": false,
+      "description": "Premium access status"
+    },
+    "forgedAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the core was awakened"
+    }
+  },
+  "required": [
+    "name"
+  ]
+}
