@@ -1,7 +1,10 @@
 /**
- * @typedef {Object} SystemLog
- * @property {string} action - What happened
- * @property {string} [reason] - Why it happened
- * @property {string} agentName - Which agent performed this action
- * @property {string} [impact] - The impact or result
+ * @typedef {'cinematic' | 'stealth' | 'developer'} StyleResonance
+ *
+ * @typedef {Object} UserProfile
+ * @property {string} name - User designation or alias
+ * @property {string} [location] - Primary sector / city region
+ * @property {StyleResonance} [preferredStyle='cinematic'] - Interface resonance style
+ * @property {boolean} [isPremium=false] - Premium access status
+ * @property {string} [forgedAt] - When the core was awakened (ISO Date string)
  */
