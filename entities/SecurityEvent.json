@@ -1,0 +1,32 @@
+{
+  "name": "SecurityEvent",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "Event title"
+    },
+    "body": {
+      "type": "string",
+      "description": "Event description"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "motion",
+        "door",
+        "pattern",
+        "purge",
+        "scan",
+        "test"
+      ],
+      "default": "test",
+      "description": "Event category"
+    }
+  },
+  "required": [
+    "title",
+    "body",
+    "category"
+  ]
+}
