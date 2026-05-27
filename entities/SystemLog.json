@@ -1,0 +1,26 @@
+{
+  "name": "SystemLog",
+  "type": "object",
+  "properties": {
+    "action": {
+      "type": "string",
+      "description": "What happened"
+    },
+    "reason": {
+      "type": "string",
+      "description": "Why it happened"
+    },
+    "agentName": {
+      "type": "string",
+      "description": "Which agent performed this action"
+    },
+    "impact": {
+      "type": "string",
+      "description": "The impact or result"
+    }
+  },
+  "required": [
+    "action",
+    "agentName"
+  ]
+}
