@@ -1,12 +1,11 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { supabase } from "@/lib/supabaseClient";
+import { supabase } from "@/api/supabaseClient";
 import CrystalCore from "@/components/forge/CrystalCore";
 import DataStream from "@/components/forge/DataStream";
 
 export default function Boot() {
   const navigate = useNavigate();
-
   useEffect(() => {
     const init = async () => {
       // Simulate boot-up delay
@@ -42,7 +41,6 @@ export default function Boot() {
         <div className="absolute w-40 h-40 rounded-full bg-violet-600/10 blur-2xl" />
         <CrystalCore size={160} />
       </div>
-
       <div className="flex flex-col items-center gap-3">
         <p className="text-xs tracking-[0.4em] text-indigo-400 uppercase font-medium">
           AWAKENING THE CRYSTAL CORE...
@@ -57,7 +55,6 @@ export default function Boot() {
           ))}
         </div>
       </div>
-
       <style>{`
         @keyframes pulse {
           0%, 100% { opacity: 0.2; transform: scale(0.8); }
