@@ -15,27 +15,42 @@ export default function PaywallModal({ onClose, onSuccess }) {
 
   const handleUpgrade = async () => {
     setLoading(true);
-    await new Promise(r => setTimeout(r, 2000));
-    const { data: profiles } = await supabase
-      .from('profiles')
-      .select('*')
-      .limit(1);
-    if (profiles && profiles.length > 0) {
-      await supabase
+
+    try {
+      // 1. Get the authenticated user
+      const { data: { user } } = await supabase.auth.getUser();
+
+      if (!user) {
+        console.error("No user logged in");
+        setLoading(false);
+        return;
+      }
+
+      // 2. Update the premium status for this specific user
+      const { error: updateError } = await supabase
         .from('profiles')
         .update({ is_premium: true })
-        .eq('id', profiles[0].id);
+        .eq('id', user.id);
+
+      if (updateError) throw updateError;
+
+      // 3. Log the event with user_id
+      await supabase
+        .from('system_logs')
+        .insert([{
+          user_id: user.id,
+          action: "Premium unlocked.",
+          reason: "User completed upgrade flow.",
+          agent_name: "Orchestrator",
+          impact: "All premium features now active. Forge operating at maximum power.",
+        }]);
+
+      onSuccess();
+    } catch (err) {
+      console.error("Upgrade process failed:", err);
+    } finally {
+      setLoading(false);
     }
-    await supabase
-      .from('system_logs')
-      .insert([{
-        action: "Premium unlocked. All agents operating at full capacity.",
-        reason: "User completed upgrade flow.",
-        agent_name: "Orchestrator",
-        impact: "All premium features now active. Forge operating at maximum power.",
-      }]);
-    setLoading(false);
-    onSuccess();
   };
 
   return (
