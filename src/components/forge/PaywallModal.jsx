@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { supabase } from "../../api/supabaseClient";
+import { supabase } from "@/api/supabaseClient";
 import { X, Infinity, Shield, Brain, Sparkles, Zap } from "lucide-react";
 
 const FEATURES = [
@@ -15,34 +15,25 @@ export default function PaywallModal({ onClose, onSuccess }) {
 
   const handleUpgrade = async () => {
     setLoading(true);
-    
-    // Simulate network delay for cinematic effect
     await new Promise(r => setTimeout(r, 2000));
-    
-    // 1. Get the current user profile from Supabase
     const { data: profiles } = await supabase
-      .from('UserProfile')
+      .from('profiles')
       .select('*')
       .limit(1);
-      
-    // 2. Update their status to Premium
     if (profiles && profiles.length > 0) {
       await supabase
-        .from('UserProfile')
-        .update({ isPremium: true })
-        .eq('name', profiles[0].name); // Using 'name' as the primary identifier based on your JSON schema
+        .from('profiles')
+        .update({ is_premium: true })
+        .eq('id', profiles[0].id);
     }
-    
-    // 3. Log the system upgrade securely
     await supabase
-      .from('SystemLog')
+      .from('system_logs')
       .insert([{
         action: "Premium unlocked. All agents operating at full capacity.",
         reason: "User completed upgrade flow.",
-        agentName: "Orchestrator",
+        agent_name: "Orchestrator",
         impact: "All premium features now active. Forge operating at maximum power.",
       }]);
-      
     setLoading(false);
     onSuccess();
   };
@@ -57,7 +48,7 @@ export default function PaywallModal({ onClose, onSuccess }) {
         </div>
 
         <div className="flex flex-col items-center gap-3 mb-8">
-          <div className="w-16 h-16 rounded-full bg-violet-600/15 border border-violet-500/40 flex items-center justify-center glow-violet">
+          <div className="w-16 h-16 rounded-full bg-violet-600/15 border border-violet-500/40 flex items-center justify-center">
             <Infinity className="w-8 h-8 text-violet-400" />
           </div>
           <h2 className="text-2xl font-black text-white tracking-tight">AWAKEN THE CORE</h2>
@@ -95,3 +86,17 @@ export default function PaywallModal({ onClose, onSuccess }) {
             <p className="text-xs text-violet-400 mt-1">$99.99/yr</p>
           </button>
         </div>
+
+        <button
+          onClick={handleUpgrade}
+          disabled={loading}
+          className="w-full py-4 rounded-2xl bg-violet-600 hover:bg-violet-500 disabled:opacity-50 transition-all text-white font-black tracking-wider text-sm"
+        >
+          {loading ? "AWAKENING..." : `UNLOCK ${plan === "annual" ? "ANNUAL" : "MONTHLY"} — ${plan === "annual" ? "$99.99/yr" : "$12.99/mo"}`}
+        </button>
+
+        <p className="text-center text-xs text-gray-600 mt-4">Cancel anytime. No hidden fees.</p>
+      </div>
+    </div>
+  );
+}
